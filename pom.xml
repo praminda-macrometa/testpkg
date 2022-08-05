@@ -13,6 +13,12 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
   </properties>
+  <scm>
+    <url>https://github.com/praminda-macrometa/testpkg.git</url>
+    <developerConnection>scm:git:https://github.com/praminda-macrometa/testpkg.git</developerConnection>
+    <connection>scm:git:https://github.com/praminda-macrometa/testpkg.git</connection>
+    <tag>HEAD</tag>
+  </scm>
 
   <distributionManagement>
     <repository>
