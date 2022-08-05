@@ -30,6 +30,8 @@ jobs:
 
     - name: Maven release
       run: |
+        git config --global user.email "gh-release@macrometa.io"
+        git config --global user.name "Release Action"
         mvn -B -Dtag=v${{ github.event.release.tag_name }} release:prepare -DreleaseVersion=${{ github.event.release.tag_name }}
         mvn -B release:perform
       env:
