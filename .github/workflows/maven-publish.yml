@@ -34,10 +34,13 @@ jobs:
       run: |
         git config --global user.email "gh-release@macrometa.io"
         git config --global user.name "Release Action"
-        mvn -B -Dtag=v${{ github.event.release.tag_name }} release:prepare -DreleaseVersion=${{ github.event.release.tag_name }}
+        mvn -B -DpushChanges=false -Dtag=v${{ github.event.release.tag_name }} release:prepare -DreleaseVersion=${{ github.event.release.tag_name }}
         mvn -B release:perform
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        github_token: ${{ github.token }}
 
 #     - name: Publish to GitHub Packages Apache Maven
 #       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
