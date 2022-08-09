@@ -1,11 +1,19 @@
 # This workflow will build a package using Maven and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#apache-maven-with-a-settings-path
 
-name: Maven Package
+name: Maven Release
 
-on:
-  release:
-    types: [published]
+on: 
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Version to be released. (must follow semver)'     
+        required: true
+        default: 'x.y.z'
+      developmentVersion:
+        required: true
+        description: 'Version in pom files after the release. (must have suffix -SNAPSHOT)'
+        default: 'x.y.z-SNAPSHOT'
 
 jobs:
   build:
@@ -27,6 +35,11 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+    - name: Setup git user
+      run: |
+        git config --global user.email "gh-actions@macrometa.io"
+        git config --global user.name "Github Actions"
+
     - name: Maven release
       shell: bash
       run: |
@@ -34,17 +47,7 @@ jobs:
         version=${tag:1}
         git config --global user.email "gh-release@macrometa.io"
         git config --global user.name "Release Action"
-        mvn -B -DpushChanges=false -Dtag=${{ github.event.release.tag_name }} release:prepare -DreleaseVersion=$version
+        mvn -B -Dtag=v${{ github.event.inputs.releaseVersion }} release:prepare -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}
         mvn -B release:perform -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
-
-    - name: Push changes
-      uses: ad-m/github-push-action@master
-      env:
-        github_token: ${{ github.token }}
-
-#     - name: Publish to GitHub Packages Apache Maven
-#       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-#       env:
-#         GITHUB_TOKEN: ${{ github.token }}
