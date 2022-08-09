@@ -4,7 +4,7 @@
 
   <groupId>co.praminda.pkg</groupId>
   <artifactId>test</artifactId>
-  <version>1.4.1</version>
+  <version>1.4.2-SNAPSHOT</version>
   <name>Test pkg Client</name>
 
   <properties>
@@ -16,7 +16,7 @@
     <url>https://github.com/praminda-macrometa/testpkg.git</url>
     <developerConnection>scm:git:https://github.com/praminda-macrometa/testpkg.git</developerConnection>
     <connection>scm:git:https://github.com/praminda-macrometa/testpkg.git</connection>
-    <tag>v1.4.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <distributionManagement>
