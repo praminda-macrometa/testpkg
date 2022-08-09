@@ -47,7 +47,7 @@ jobs:
         version=${tag:1}
         git config --global user.email "gh-release@macrometa.io"
         git config --global user.name "Release Action"
-        mvn -B -Dtag=v${{ github.event.inputs.releaseVersion }} release:prepare -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}
-        mvn -B release:perform -s $GITHUB_WORKSPACE/settings.xml
+        mvn -B -Dtag=v${{ github.event.inputs.releaseVersion }} release:prepare release:perform -s $GITHUB_WORKSPACE/settings.xml -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}
       env:
+        GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ github.token }}
