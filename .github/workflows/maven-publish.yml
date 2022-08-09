@@ -38,8 +38,7 @@ jobs:
     - name: Setup git user
       run: |
         cat $GITHUB_WORKSPACE/settings.xml
-        echo ${{ github.actor }} : $(printf "%0.s*" {1..$#{{ github.token }})
-        echo $GITHUB_ACTOR : $(printf "%0.s*" {1..$#GITHUB_TOKEN})
+        echo $GITHUB_ACTOR : $#GITHUB_TOKEN
         git config --global user.email "gh-actions@macrometa.io"
         git config --global user.name "Github Actions"
 
