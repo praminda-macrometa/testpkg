@@ -37,6 +37,7 @@ jobs:
 
     - name: Setup git user
       run: |
+        cat $GITHUB_WORKSPACE/settings.xml
         git config --global user.email "gh-actions@macrometa.io"
         git config --global user.name "Github Actions"
 
