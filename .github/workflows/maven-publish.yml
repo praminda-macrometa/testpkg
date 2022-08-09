@@ -49,3 +49,16 @@ jobs:
       env:
         GITHUB_ACTOR: ${{ github.actor }}
         GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        tag_name: v${{ github.event.inputs.releaseVersion }}
+        release_name: ${{ github.event.inputs.releaseVersion }}
+        body: |
+          Test pkg version ${{ github.event.inputs.releaseVersion }} released.
+        draft: false
+        prerelease: false
