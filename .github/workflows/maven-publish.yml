@@ -38,16 +38,14 @@ jobs:
     - name: Setup git user
       run: |
         cat $GITHUB_WORKSPACE/settings.xml
+        echo ${{ github.actor }} : $(printf "%0.s*" {1..$#${{ github.token }})
+        echo $GITHUB_ACTOR : $(printf "%0.s*" {1..$#$GITHUB_TOKEN})
         git config --global user.email "gh-actions@macrometa.io"
         git config --global user.name "Github Actions"
 
     - name: Maven release
       shell: bash
       run: |
-        tag=${{ github.event.release.tag_name }}
-        version=${tag:1}
-        git config --global user.email "gh-release@macrometa.io"
-        git config --global user.name "Release Action"
         mvn -B -Dtag=v${{ github.event.inputs.releaseVersion }} release:prepare release:perform -s $GITHUB_WORKSPACE/settings.xml -DreleaseVersion=${{ github.event.inputs.releaseVersion }} -DdevelopmentVersion=${{ github.event.inputs.developmentVersion }}
       env:
         GITHUB_ACTOR: ${{ github.actor }}
